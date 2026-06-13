@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halal Reach Media – Influencer Marketing Agentur</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;line-height:1.6;color:#0d0d0d;background:#fcfcfc;transition:background .5s,color .5s;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.container{max-width:1100px;margin:0 auto;padding:0 40px}
+
+#bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.7;transition:opacity .5s}
+body.dark #bgCanvas{opacity:.5}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,0,0,.04);padding:14px 0;transition:all .5s}
+nav .container{display:flex;flex-direction:column;align-items:center;gap:6px}
+.nav-row{display:flex;justify-content:center;align-items:center;width:100%;position:relative}
+.nav-logo{height:72px;transition:transform .3s,opacity .3s}
+.nav-logo:hover{transform:scale(1.04);opacity:.85}
+.nav-logo.dark{display:none}
+.nav-links{display:flex;gap:40px}
+.nav-links a{color:#333;text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:4px 0;position:relative;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:linear-gradient(90deg,#1B5E20,#D4AF37);transition:width .4s cubic-bezier(.25,.8,.25,1)}
+.nav-links a:hover{color:#1B5E20}
+.nav-links a:hover::after{width:100%}
+
+#darkToggle{position:absolute;right:0;background:none;border:1.5px solid #ccc;border-radius:20px;width:42px;height:24px;cursor:pointer;transition:all .5s}
+#darkToggle::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#1B5E20;transition:all .4s cubic-bezier(.68,-.55,.27,1.55)}
+#darkToggle:hover{border-color:#1B5E20}
+body.dark #darkToggle{border-color:#4CAF50}
+body.dark #darkToggle::after{left:20px;background:#4CAF50}
+
+.hero{position:relative;z-index:1;padding:140px 0 120px;text-align:center}
+.hero-badge{display:inline-block;padding:8px 20px;border:1px solid rgba(27,94,32,.25);border-radius:50px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#1B5E20;margin-bottom:28px;animation:fadeInUp .8s ease-out}
+.hero h1{font-size:68px;font-weight:900;letter-spacing:-2px;line-height:1.08;margin-bottom:18px;color:#000;animation:fadeInUp .8s ease-out .1s both}
+.hero h1 .serif{font-family:'Playfair Display',serif;font-weight:500;font-style:italic;color:#1B5E20;position:relative}
+.hero h1 .serif::after{content:'';position:absolute;bottom:8px;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent,#D4AF37,transparent);opacity:.6}
+.hero .lead{font-size:18px;color:#444;max-width:560px;margin:0 auto 48px;font-weight:400;line-height:1.7;animation:fadeInUp .8s ease-out .2s both}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+.btn-group{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;animation:fadeInUp .8s ease-out .3s both}
+.btn{position:relative;display:inline-flex;align-items:center;gap:8px;padding:16px 38px;border-radius:50px;font-weight:600;font-size:14px;text-decoration:none;letter-spacing:.3px;transition:all .4s cubic-bezier(.25,.8,.25,1);overflow:hidden;z-index:1}
+.btn::before{content:'';position:absolute;inset:0;border-radius:50px;z-index:-1;transition:all .4s}
+.btn-primary{background:transparent;color:#fff;border:none}
+.btn-primary::before{background:linear-gradient(135deg,#1B5E20,#2E7D32)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(27,94,32,.35)}
+.btn-primary:hover::before{background:linear-gradient(135deg,#124018,#1B5E20)}
+.btn-primary .arrow,.btn-outline .arrow{display:inline-block;transition:transform .3s}
+.btn-primary:hover .arrow,.btn-outline:hover .arrow{transform:translateX(4px)}
+.btn-outline{background:transparent;color:#1B5E20;border:1.5px solid rgba(27,94,32,.3)}
+.btn-outline::before{background:rgba(27,94,32,.04)}
+.btn-outline:hover{border-color:#1B5E20;transform:translateY(-3px);box-shadow:0 8px 24px rgba(27,94,32,.12)}
+
+section{position:relative;z-index:1;padding:110px 0;transition:background .5s}
+.section-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3.5px;color:#0d3310;margin-bottom:12px}
+section h2{font-family:'Playfair Display',serif;font-size:42px;font-weight:600;margin-bottom:14px;letter-spacing:-.5px;color:#000;line-height:1.2}
+section .subtitle{color:#555;font-size:16px;max-width:500px;margin-bottom:60px;line-height:1.7;font-weight:400}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:20px}
+.card{position:relative;background:#fff;border:1px solid #ddd;border-radius:10px;padding:32px 28px;transition:all .5s cubic-bezier(.25,.8,.25,1);cursor:default;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#1B5E20,#D4AF37);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.25,.8,.25,1)}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.12);border-color:transparent}
+.card:hover::before{transform:scaleX(1)}
+.card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.card-num{font-size:44px;font-weight:900;color:#1B5E20;opacity:.07;line-height:1;transition:all .5s;flex-shrink:0}
+.card:hover .card-num{opacity:.14}
+.card-illo{flex-shrink:0}
+.card-illo svg{width:80px;height:60px;transition:all .4s}
+.card:hover .card-illo svg{transform:scale(1.05)}
+.card h3{font-size:17px;font-weight:600;margin-bottom:6px;color:#1a1a1a;transition:color .3s}
+.card:hover h3{color:#1B5E20}
+.card p{color:#555;font-size:14px;line-height:1.65}
+
+/* Card 04 + Bild */
+.card-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch;min-height:320px;margin-top:20px}
+.card-row .card{margin-top:0}
+.side-image{overflow:hidden;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.12);transition:all .4s;height:100%}
+.side-image:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.12)}
+.side-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.side-image:hover img{transform:scale(1.03)}
+body.dark .side-image{box-shadow:0 8px 30px rgba(0,0,0,.4)}
+
+.stats{background:linear-gradient(135deg,#0d3310,#1B5E20);color:#fff;padding:70px 0;text-align:center;position:relative;overflow:hidden}
+.stats::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");opacity:.5}
+.stats .grid{gap:32px;position:relative;z-index:1}
+.stat-item{padding:20px}
+.stat-num{font-size:48px;font-weight:900;color:#D4AF37;margin-bottom:4px;transition:transform .4s}
+.stat-item:hover .stat-num{transform:scale(1.08)}
+.stat-label{color:rgba(255,255,255,.7);font-size:13px;font-weight:500;letter-spacing:.8px;text-transform:uppercase}
+
+.fuerwen{background:#f5f5f5}
+.fuerwen .card{padding:40px 34px;border-left:3px solid transparent}
+.fuerwen .card:first-child{border-left-color:#1B5E20}
+.fuerwen .card:last-child{border-left-color:#D4AF37}
+
+.cta{text-align:center;padding:100px 0}
+.cta .btn-primary{padding:18px 48px;font-size:15px}
+.cta .btn-primary::before{background:linear-gradient(135deg,#D4AF37,#c4a02f)}
+.cta .btn-primary:hover{box-shadow:0 12px 36px rgba(212,175,55,.4)}
+.cta .btn-primary:hover::before{background:linear-gradient(135deg,#c4a02f,#b8960a)}
+.cta-form{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:440px;margin:0 auto}
+.cta-input{padding:16px 20px;border-radius:50px;border:1.5px solid #ddd;font-size:15px;font-family:Inter,sans-serif;flex:1;min-width:220px;outline:none;transition:border-color .3s}
+.cta-input:focus{border-color:#1B5E20}
+body.dark .cta-input{background:#1a1a1a;border-color:#333;color:#ddd}
+body.dark .cta-input:focus{border-color:#4CAF50}
+
+footer{border-top:1px solid #e0e0e0;padding:40px 0;text-align:center;color:#777;font-size:12px;transition:all .5s}
+.footer-logo{height:32px;margin-bottom:16px;opacity:.7;transition:opacity .3s}
+.footer-logo:hover{opacity:1}
+.footer-logo.dark{display:none}
+footer a{color:#1B5E20;text-decoration:none}
+
+/* DARK MODE */
+body.dark{background:#060606;color:#ddd}
+body.dark nav{background:rgba(6,6,6,.88);border-color:rgba(255,255,255,.04)}
+body.dark .nav-logo.light,body.dark .footer-logo.light{display:none}
+body.dark .nav-logo.dark,body.dark .footer-logo.dark{display:inline}
+body.dark .nav-links a{color:#888}
+body.dark .nav-links a::after{background:linear-gradient(90deg,#4CAF50,#D4AF37)}
+body.dark .nav-links a:hover{color:#4CAF50}
+body.dark .hero-badge{border-color:rgba(76,175,80,.3);color:#4CAF50}
+body.dark .hero h1{color:#eee}
+body.dark .hero h1 .serif{color:#4CAF50}
+body.dark .hero .lead{color:#999}
+body.dark .card{background:#111;border-color:#1a1a1a}
+body.dark .card:hover{border-color:#2a2a2a;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+body.dark .card h3{color:#ddd}
+body.dark .card:hover h3{color:#4CAF50}
+body.dark .card p,body.dark .subtitle,body.dark .cta p{color:#999}
+body.dark .card-num{color:#4CAF50}
+body.dark .section-tag{color:#4CAF50}
+body.dark section h2{color:#eee}
+body.dark .fuerwen{background:#0a0a0a}
+body.dark .btn-outline{border-color:rgba(76,175,80,.3);color:#4CAF50}
+body.dark .btn-outline::before{background:rgba(76,175,80,.06)}
+body.dark .btn-outline:hover{border-color:#4CAF50}
+body.dark .cta .btn-primary{color:#060606}
+body.dark footer{border-color:#1a1a1a;color:#666}
+body.dark footer a{color:#4CAF50}
+
+@media(max-width:768px){
+.hero h1{font-size:38px}
+section h2{font-size:28px}
+.nav-logo{height:52px}
+.nav-links{gap:20px}
+.card-row{grid-template-columns:1fr}
+.side-image{max-height:220px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<nav>
+  <div class="container">
+    <div class="nav-row">
+      <a href="#"><img src="logo-light.png" alt="Halal Reach Media" class="nav-logo light"><img src="logo-dark.png" alt="Halal Reach Media" class="nav-logo dark"></a>
+      <button id="darkToggle" title="Umschalten"></button>
+    </div>
+    <div class="nav-links">
+      <a href="#services">Leistungen</a>
+      <a href="#fuerwen">Für wen</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Influencer Marketing Agentur</div>
+    <h1>Creator &amp; Brands<br><span class="serif">authentisch</span> verbinden.</h1>
+    <p class="lead">Wir bringen halal-konforme Creator mit Marken zusammen, die ihre Zielgruppe wirklich erreichen &mdash; auf Basis echter Community-Daten, nicht auf Basis von Vermutungen.</p>
+    <div class="btn-group">
+      <a href="#kontakt" class="btn btn-primary">Projekt starten <span class="arrow">→</span></a>
+      <a href="#services" class="btn btn-outline">Mehr erfahren <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="section-tag">Leistungen</div>
+    <h2>Daten, die überzeugen.</h2>
+    <p class="subtitle">Wir analysieren echte Kommentare, um zu verstehen, was die Zielgruppe kaufen will. Das liefert Ihnen keine andere Agentur.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-num">01</div>
+          <div class="card-illo"><svg viewBox="0 0 80 60" fill="none"><circle cx="22" cy="28" r="9" stroke="#1B5E20" stroke-width="1.5" opacity=".3"/><circle cx="22" cy="24" r="4" fill="#1B5E20" opacity=".15"/><path d="M13 46 Q22 36 31 46" stroke="#1B5E20" stroke-width="1.5" opacity=".25" fill="none"/><circle cx="48" cy="18" r="8" stroke="#1B5E20" stroke-width="1.5" opacity=".2"/><path d="M44 18 L47 21 L52 15" stroke="#1B5E20" stroke-width="2" stroke-linecap="round" opacity=".5"/><line x1="60" y1="14" x2="70" y2="24" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" opacity=".35"/><line x1="70" y1="14" x2="60" y2="24" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" opacity=".2"/></svg></div>
+        </div>
+        <h3>Creator-Auswahl</h3><p>Handverlesene Micro-Influencer mit kaufbereiter Community. Halal-geprüft, keine Fake-Follower.</p></div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-num">02</div>
+          <div class="card-illo"><svg viewBox="0 0 80 60" fill="none"><circle cx="35" cy="26" r="16" stroke="#1B5E20" stroke-width="2" opacity=".3"/><circle cx="35" cy="26" r="8" fill="#1B5E20" opacity=".08"/><line x1="47" y1="38" x2="58" y2="49" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" opacity=".4"/><rect x="24" y="18" width="6" height="8" rx="2" fill="#D4AF37" opacity=".15"/><rect x="32" y="18" width="6" height="12" rx="2" fill="#1B5E20" opacity=".12"/><rect x="40" y="18" width="6" height="6" rx="2" fill="#D4AF37" opacity=".1"/></svg></div>
+        </div>
+        <h3>Zielgruppen-Analyse</h3><p>Wir analysieren hunderte Kommentare und identifizieren konkrete Kaufabsichten Ihrer Zielgruppe.</p></div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-num">03</div>
+          <div class="card-illo"><svg viewBox="0 0 80 60" fill="none"><rect x="14" y="18" width="14" height="28" rx="2" stroke="#1B5E20" stroke-width="1.5" opacity=".3"/><rect x="18" y="24" width="6" height="6" fill="#D4AF37" opacity=".2"/><rect x="30" y="10" width="18" height="36" rx="2" stroke="#1B5E20" stroke-width="1.5" opacity=".3"/><rect x="35" y="16" width="8" height="6" fill="#D4AF37" opacity=".2"/><rect x="50" y="22" width="12" height="24" rx="2" stroke="#D4AF37" stroke-width="1.5" opacity=".3"/><rect x="53" y="28" width="6" height="6" fill="#1B5E20" opacity=".15"/><line x1="21" y1="46" x2="62" y2="46" stroke="#1B5E20" stroke-width="1" opacity=".15"/></svg></div>
+        </div>
+        <h3>Brand-Matching</h3><p>Passende halal-konforme Marken für jeden Creator &mdash; nur echte Unternehmen mit echten Websites.</p></div>
+    </div>
+    <div class="card-row">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-num">04</div>
+          <div class="card-illo"><svg viewBox="0 0 80 60" fill="none"><rect x="10" y="14" width="60" height="36" rx="6" stroke="#1B5E20" stroke-width="1.5" opacity=".3"/><circle cx="30" cy="32" r="6" stroke="#D4AF37" stroke-width="1.5" opacity=".4"/><polygon points="30,29 32,34 28,34" fill="#D4AF37" opacity=".4"/><rect x="42" y="26" width="6" height="12" rx="2" fill="#1B5E20" opacity=".12"/><rect x="50" y="23" width="6" height="15" rx="2" fill="#1B5E20" opacity=".12"/><rect x="58" y="20" width="6" height="18" rx="2" fill="#D4AF37" opacity=".15"/></svg></div>
+        </div>
+        <h3>Kampagnen-Management</h3><p>Von der ersten Kontaktaufnahme bis zum Upload. Faire Festvergütung, transparente Abrechnung.</p></div>
+      <div class="side-image">
+        <img src="HalalReachBild2.jpeg" alt="Zusammenarbeit">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container">
+    <div class="grid">
+      <div class="stat-item"><div class="stat-num">130K+</div><div class="stat-label">Views pro Video</div></div>
+      <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Geprüfte Creator</div></div>
+      <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Halal-konform</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="fuerwen" class="fuerwen">
+  <div class="container">
+    <div class="section-tag">Für wen</div>
+    <h2>Beide Seiten im Blick.</h2>
+    <p class="subtitle">Wir bringen zusammen, was zusammen gehört &mdash; mit Respekt vor beiden Seiten.</p>
+    <div class="grid">
+      <div class="card"><h3>Für Creator</h3><p>Sie möchten mit Brands arbeiten, die Ihre Werte teilen? Wir finden sie. Keine Kompromisse bei Ihren Prinzipien &mdash; nur faire Vergütung und echte Partnerschaften.</p></div>
+      <div class="card"><h3>Für Brands</h3><p>Sie möchten die muslimische Zielgruppe authentisch erreichen? Wir liefern datengestützte Creator-Vorschläge mit Belegen aus der Community &mdash; kein Bauchgefühl, sondern harte Fakten.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="cta">
+  <div class="container">
+    <div class="section-tag">Kontakt</div>
+    <h2>Bereit für Ihren nächsten Schritt?</h2>
+    <p>Unverbindlich. Wir antworten innerhalb von 24 Stunden.</p>
+    <form class="cta-form" action="https://formspree.io/f/xgobpbvz" method="POST">
+        <input type="email" name="email" placeholder="Ihre E-Mail-Adresse" required class="cta-input">
+        <button type="submit" class="btn btn-primary">Absenden <span class="arrow">→</span></button>
+      </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <img src="logo-light.png" alt="Halal Reach Media" class="footer-logo light">
+    <img src="logo-dark.png" alt="Halal Reach Media" class="footer-logo dark">
+    <p>&copy; 2026 Halal Reach Media &mdash; Influencer Marketing mit Werten. &nbsp;|&nbsp; <a href="mailto:hallo@halalreachmedia.de">hallo@halalreachmedia.de</a></p>
+  </div>
+</footer>
+
+<script>
+const canvas=document.getElementById('bgCanvas'),ctx=canvas.getContext('2d');
+let w,h,o=0;
+function rs(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+rs();addEventListener('resize',rs);
+(function d(){ctx.clearRect(0,0,w,h);let dk=document.body.classList.contains('dark');
+ctx.strokeStyle=dk?'rgba(255,255,255,.04)':'rgba(27,94,32,.06)';ctx.lineWidth=1;let s=80;
+for(let y=o%s;y<h;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+for(let x=o%s;x<w;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}
+ctx.fillStyle=dk?'rgba(212,175,55,.15)':'rgba(212,175,55,.2)';
+for(let x=o%s;x<w;x+=s)for(let y=o%s;y<h;y+=s){ctx.beginPath();ctx.arc(x,y,2,0,7);ctx.fill()}
+o+=.3;requestAnimationFrame(d)})();
+
+const tg=document.getElementById('darkToggle');
+if(localStorage.getItem('darkMode')==='true'||(!localStorage.getItem('darkMode')&&matchMedia('(prefers-color-scheme:dark)').matches))document.body.classList.add('dark');
+tg.addEventListener('click',()=>{document.body.classList.toggle('dark');localStorage.setItem('darkMode',document.body.classList.contains('dark'))});
+</script>
+</body>
+</html>
